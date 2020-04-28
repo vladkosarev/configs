@@ -5,6 +5,8 @@ Plug 'unblevable/quick-scope'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'vimwiki/vimwiki'
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 "Plug 'itchyny/lightline.vim'
 "Plug 'luochen1990/rainbow'
 "Plug 'junegunn/fzf', { 'do': './install --bin' }
@@ -139,3 +141,6 @@ let g:airline#extensions#branch#enabled=1
 
 " CoC Airline Integration
 let g:airline#extensions#coc#enabled = 1
+
+" Vimwiki markdown integration
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
