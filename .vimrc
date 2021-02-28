@@ -7,6 +7,9 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'samsaga2/vim-z80'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'rust-lang/rust.vim'
 "Plug 'itchyny/lightline.vim'
 "Plug 'luochen1990/rainbow'
 "Plug 'junegunn/fzf', { 'do': './install --bin' }
@@ -26,10 +29,10 @@ set hidden
 " Add status line
 set laststatus=2
 " Tabs
-set expandtab " On pressing tab, insert 2 spaces
-set tabstop=2 " show existing tab with 2 spaces width
-set softtabstop=2
-set shiftwidth=2 " when indenting with '>', use 2 spaces width
+set expandtab " On pressing tab, insert 4 spaces
+set tabstop=4 " show existing tab with 4 spaces width
+set softtabstop=4
+set shiftwidth=4 " when indenting with '>', use 4 spaces width
 " Syntax
 syntax on
 " Line Numbers
@@ -144,3 +147,17 @@ let g:airline#extensions#coc#enabled = 1
 
 " Vimwiki markdown integration
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
+" Fix CoC floating window color
+hi Pmenu ctermbg=white
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction

@@ -1,32 +1,55 @@
 {
-  "prettier.eslintIntegration": false,
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "css", "json", "svelte", "c"],
-  "coc.preferences.formatOnInsertLeave": true,
-  "coc.preferences.formatOnType": false,
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact"
-  ],
-  "eslint.autoFixOnSave":true,
-  "eslint.options": {
-    "env": {
-      "commonjs": true,
-      "es6": true,
-      "node": true
+    "prettier.eslintIntegration": false,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "javascript",
+        "css",
+        "json",
+        "svelte",
+        "c",
+        "rs",
+        "html"
+    ],
+    "coc.preferences.formatOnInsertLeave": true,
+    "coc.preferences.formatOnType": false,
+    "eslint.filetypes": [
+        "javascript",
+        "typescript",
+        "typescriptreact",
+        "javascriptreact"
+    ],
+    "eslint.autoFixOnSave": true,
+    "eslint.options": {
+        "env": {
+            "commonjs": true,
+            "es6": true,
+            "node": true
+        },
+        "extends": "eslint:recommended",
+        "parserOptions": {
+            "ecmaVersion": 2018
+        },
+        "rules": {}
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 2018
+    "prettier": {
+        "trailingComma": "none",
+        "tabWidth": 4
     },
-    "rules": {}
-  },
-  "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "objc", "objcpp"],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
     }
-  }
 }
