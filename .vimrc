@@ -9,12 +9,16 @@ Plug 'vimwiki/vimwiki'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'samsaga2/vim-z80'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'OmniSharp/omnisharp-vim'
+"Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
 "Plug 'rust-lang/rust.vim'
 "Plug 'itchyny/lightline.vim'
-"Plug 'luochen1990/rainbow'
-"Plug 'junegunn/fzf', { 'do': './install --bin' }
-"Plug 'junegunn/fzf.vim'
+Plug 'luochen1990/rainbow'
+Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 "Plug 'miyakogi/conoline.vim'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 
 " Basics
@@ -95,15 +99,15 @@ set listchars=tab:>-,trail:~,extends:>,precedes:<,space:.
 set ttyfast
 " Use tab for autocompletion
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
     let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Mappings
 nnoremap ; :
@@ -149,7 +153,7 @@ let g:airline#extensions#coc#enabled = 1
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
 " Fix CoC floating window color
-hi Pmenu ctermbg=white
+hi Pmenu ctermbg=grey
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -161,3 +165,34 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" Tepmlates
+autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
+
+" FZF
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
+" remap envoke key
+nnoremap <silent> <C-z> :FZF<CR>
+
+" NerdTree
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeAutoDeleteBuffer = 1
+"let NERDTreeQuitOnOpen = 1
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+"map - :NERDTreeToggle<CR> " open/close nerdtree window
+"map <leader>r :NERDTreeFind<cr> " this is the key to jump to the nerdtree window from any other window
+"autocmd BufWinEnter * NERDTreeFind map ] :NERDTreeFind<CR> " pressing this inside any open file in vim will jump to the nerdtree and highlight where that file is -> very useful when you have multiple files open at once
+
+" Ruby
+let g:ruby_indent_assignment_style = 'variable'
+
