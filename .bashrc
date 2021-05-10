@@ -5,10 +5,7 @@
 
 PS1='[\u@\h \W]\$ '
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+export AWS_VAULT_BACKEND=pass
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export CLR_OPENSSL_VERSION_OVERRIDE=46
 export DOTNET_ROOT=$HOME/.dotnet
@@ -20,7 +17,21 @@ export PATH=$PATH:~/.platformio/penv/bin
 
 export PATH=$PATH:~/azure-functions-cli
 
-#[ -z $DISPLAY ] && export DISPLAY=127.0.0.1:0.0
+export PATH=$PATH:/usr/lib/psql12/bin
+
+export PATH=$PATH:/usr/lib/ruby/gems/2.7.0/bin
+
+eval "$(direnv hook bash)"
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+#[ -z $DISPLAY ] && export DISPLAY=:0
+
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
 
 export TERM=xterm-256color
 alias la='exa -la'
@@ -37,3 +48,4 @@ alias cat=bat
 alias v=vim-huge
 alias vim=vim-huge
 alias copy='xclip -sel clip'
+
