@@ -6,7 +6,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'samsaga2/vim-z80'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'OmniSharp/omnisharp-vim'
@@ -19,6 +19,8 @@ Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 "Plug 'miyakogi/conoline.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'hashivim/vim-terraform'
+Plug 'ruanyl/vim-gh-line'
 call plug#end()
 
 " Basics
@@ -97,17 +99,16 @@ set ttimeout
 set ttimeoutlen=1
 set listchars=tab:>-,trail:~,extends:>,precedes:<,space:.
 set ttyfast
-" Use tab for autocompletion
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
 
 " Mappings
 nnoremap ; :
@@ -170,7 +171,7 @@ endfunction
 autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
 
 " FZF
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 " remap envoke key
 nnoremap <silent> <C-z> :FZF<CR>
@@ -196,3 +197,6 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " Ruby
 let g:ruby_indent_assignment_style = 'variable'
 
+" Terraform
+let g:terraform_fmt_on_save=1
+let g:terraform_align=1
